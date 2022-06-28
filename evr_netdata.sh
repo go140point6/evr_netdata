@@ -108,7 +108,7 @@ FUNC_ENABLE_HEALTH_MON(){
     #echo "copies the default template conf file for common system metric"
 
     #HEALTH_CONFS=(cpu.conf memory.conf load.conf processes.conf disks.conf tcp_resets.conf tcp_conn.conf )
-    HEALTH_CONFS=(pli-node.conf pli-ei.conf)
+    HEALTH_CONFS=(evr-node.conf)
 
     for i in "${HEALTH_CONFS[@]}"; do
         echo -e "${GREEN}## enabling health conf file : $i ${NC}"
