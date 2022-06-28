@@ -1,10 +1,12 @@
-# Plugin Node - Proactive Monitoring with Netdata
-Plugin node proactive monitoring with Netdata
+# Evernode - Proactive Monitoring with Netdata
+Evernode proactive monitoring with Netdata
 
-A brief guide on how to install and configure Netdata to your @GoPlugin node for proactive monitoring & alerting.
+A brief guide on how to install and configure Netdata to your @EvernodeXRPL for proactive monitoring & alerting.
 
 ---
 ### Accompanying video for visual aid.
+
+The following video was created by the original author (@inv4fee2020) but is still relavent to basic install and config:
 
 [Youtube Playlist : Plugin ($PLI ) Node - Proactive Monitoring - UpTimeRobot & NetData](https://www.youtube.com/watch?v=3EcVNHADik0&list=PL2_76-uvpc8xr4h22XCpayMVgdKPbhy2b)
 
@@ -39,25 +41,25 @@ The following steps will now setup your VPS to report data into your Netdata 'Ge
 
   1. Logon to your VPS with your admin user account
 
-  2. We now clone down the 'pli_netdata' scripts as follows;
+  2. We now clone the 'evr_netdata' scripts as follows:
 
 ```
     cd $HOME
-    git clone https://github.com/inv4fee2020/pli_netdata.git
-    cd pli_netdata
+    git clone https://github.com/go140point6/evr_netdata.git
+    cd evr_netdata
     chmod +x *.sh
     echo
 ```
 
 
-  3. Lets run the script to begin the installation - you should have your claim-token at the ready;
+  3. Run the script to begin the installation - you should have your claim-token at the ready:
 
 ```
     ./pli_netdata.sh -setup
 ```
 
 
-  4. You will be prompted to provide the _'--claim-token'_ from the previous section above;
+  4. You will be prompted to provide the _'--claim-token'_ from the previous section above:
      Also note that the user input has a timeout.
 
 
@@ -69,7 +71,7 @@ The following steps will now setup your VPS to report data into your Netdata 'Ge
     Please enter the '--claim-token' value from the Netdata portal:
 ```
 
-   Immediately after entering the token, the script will check that the provided token is 135 characters in length. If valid the installation will continue as shown by the following messages and various components being downloaded;
+   Immediately after entering the token, the script will check that the provided token is 135 characters in length. If valid the installation will continue as shown by the following messages and various components being downloaded:
 
 ```
     ## the provided claim token appears valid
@@ -81,7 +83,7 @@ The following steps will now setup your VPS to report data into your Netdata 'Ge
     ## INSTALLING NETDATA WITH CLAIM-TOKEN...
 ```
 
-  5. While the script restarts the netdata services in order to load the new changes, it is strongly recommeneded that you perform a full reboot of your VPS.  This is due to scenarios where the detection of changes in the plugin processes do not trigger notifications. A reboot resolves this.
+  5. While the script restarts the netdata services in order to load the new changes, it is strongly recommeneded that you perform a full reboot of your VPS.  This is due to scenarios where the detection of changes in the evernode processes do not trigger notifications. A reboot resolves this.
 
 ---
 
@@ -97,16 +99,13 @@ Assuming you have made no customisations since installing NetData, then by simpl
     - Stores 30 days worth of data on the local disk which averages to about 2GB of data using the '[Change how long Netdata stores metrics](https://learn.netdata.cloud/docs/store/change-metrics-storage)' page.
 
 
-2. The script updates the 'apps_groups.conf' file to implement the config to define the plugin processes. It does this by adding the following lines under the '# other application servers' section;
+2. The script updates the 'apps_groups.conf' file to implement the config to define the evernode processes. It does this by adding the following lines under the '# other application servers' section;
+      
+      evr-node: sagent
 
-        pli-node: *2_nodeStartPM2* *startNode*
-        pli-ei: external-initiator *3_initiatorStartPM2* *startEI*
+3. The script then copies over the following alert configuration file to the 'health.d' folder where netdata reads conf file in order to produce the email notifications when the processes are not running.
 
-
-3. The script then copies over the following alert configuration files to the 'health.d' folder where netdata reads conf file in order to produce the email notifications when the processes are not running.
-
-    - pli-node.conf
-    - pli-ei.conf
+    - evr-node.conf
 
 
 ---
@@ -114,7 +113,7 @@ Assuming you have made no customisations since installing NetData, then by simpl
 
 Basic script syntax;
 
-    Usage: ./pli_netdata.sh {function}
+    Usage: ./evr_netdata.sh {function}
 
     where {function} is one of the following;
 
